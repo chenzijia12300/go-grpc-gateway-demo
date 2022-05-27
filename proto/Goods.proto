@@ -1,0 +1,60 @@
+syntax="proto3";
+
+package proto;
+
+option go_package="./proto";
+
+import "google/api/annotations.proto";
+
+service GoodsService {
+  rpc SaveGoods(Goods) returns (GoodsId){
+    option (google.api.http) = {
+      post:"/goods"
+      body:"*"
+    };
+  }
+  rpc ModifyGoods(Goods) returns (GoodsId){
+    option (google.api.http) = {
+      put:"/goods"
+      body:"*"
+    };
+  }
+  rpc DeleteGoods(GoodsIds) returns (DelGoodsResponse){
+    option (google.api.http) = {
+      post:"/goods/deletes"
+      body:"*"
+    };
+  }
+  rpc GetGoods(GetGoodsRequest) returns (GetGoodsResponse){
+    option (google.api.http) = {
+      get:"/goods/list"
+    };
+  }
+}
+
+message Goods{
+  uint64 id = 1;
+  string goods_name = 2;
+  uint64 price = 3;
+}
+
+message GoodsId{
+  uint64 id =1;
+}
+
+message GoodsIds{
+  repeated uint64 ids = 1;
+}
+
+message GetGoodsRequest{
+
+}
+
+message GetGoodsResponse{
+  repeated Goods goods_list = 1;
+}
+
+
+message DelGoodsResponse{
+
+}
